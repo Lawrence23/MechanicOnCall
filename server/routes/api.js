@@ -215,6 +215,18 @@ router.post('/login', (req, res) => {
 
     }
 
+    else{
+
+         res.json({
+
+                    status: "0",
+                    message: "Invalid parameter"
+
+                });
+
+    }
+
+
 });
 
 
@@ -302,6 +314,20 @@ router.post('/signup', (req, res) => {
 
 
     }
+
+    else{
+
+         res.json({
+
+                    status: "0",
+                    message: "Invalid parameter"
+
+                });
+
+    }
+
+
+
 
 });
 

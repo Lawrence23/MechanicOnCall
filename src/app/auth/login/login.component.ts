@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 
 import { ApiService } from '../../shared/api.service';
 
+import { CustomValidators } from 'ng2-validation';
+import { CookieService } from 'angular2-cookie/services/cookies.service';
+
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -20,41 +23,46 @@ export class LoginComponent implements OnInit {
     }];
     userType: any = {};
     success: boolean;
+    submitted: boolean
 
     constructor(
+        private cookie :CookieService,
         private router: Router,
         private apiService: ApiService
     ) {
         this.loginForm = new FormGroup({
-            username: new FormControl(),
-            password: new FormControl(),
-            confirmPassword: new FormControl(),
-            userType: new FormControl(),
-            contactNo: new FormControl()
+            email: new FormControl('', [Validators.required, CustomValidators.email]),
+            password: new FormControl('', Validators.required),
+            userType: new FormControl('', Validators.required)
         });
         this.success = false;
+        this.submitted = false;
     }
 
     ngOnInit() {}
 
     validateAndLogin() {
-        /*switch (this.userType.id) {
-            case "Customer":
-                this.success = this.usersService.getUsers(this.loginForm.value);
-                break;
-            case "Mechanic":
-                this.success = this.mechanicsService.getUsers(this.loginForm.value);
-                break;
-            default:
-                break;
+        this.submitted = true;
+        if (this.loginForm.valid) {
+            this.apiService.login(this.loginForm.value).subscribe(
+                (data :any) => {
+                    debugger;
+                    if (data.status === '1') {
+                        alert(data.message);
+                        this.cookie.putObject('user', data.data[0]);
+                        this.router.navigate(['/customer']);
+                    }
+                },
+                (error :Error) => alert(error.message)
+            );
         }
-        if (this.success) {
-            this.router.navigate(['./home']);
-        }*/
     }
 
     selected(value: any): void {
         this.userType = value;
+        this.loginForm.patchValue({
+            userType: value
+        })
     }
 
     refreshValue(value: any): void {

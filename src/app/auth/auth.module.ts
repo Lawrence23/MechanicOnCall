@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { AuthComponent } from './auth.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { VehicleComponent } from './register/vehicle/vehicle.component';
 
 import { SelectModule } from 'ng2-select';
 import { GoogleMapsAPIWrapper, AgmCoreModule } from 'angular2-google-maps/core';
@@ -21,7 +22,12 @@ import { GoogleMapsAPIWrapper, AgmCoreModule } from 'angular2-google-maps/core';
       		apiKey: 'AIzaSyCl2VgZ2-JBN9DXXdRx70cxUv1N18MEzVc'
     	})
     ],
-    declarations: [AuthComponent, LoginComponent, RegisterComponent],
+    declarations: [
+    	AuthComponent,
+    	LoginComponent,
+    	RegisterComponent,
+    	VehicleComponent
+    ],
     providers: [GoogleMapsAPIWrapper]
 })
 export class AuthModule {}
