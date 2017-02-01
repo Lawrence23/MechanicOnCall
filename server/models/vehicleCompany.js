@@ -3,7 +3,6 @@ var Schema = mongoose.Schema;
 
 
 var VehicleCompany = new Schema ({
-	id:{type:'String'},
 	company:{type:'String'}
 });
 

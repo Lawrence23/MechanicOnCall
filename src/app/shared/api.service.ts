@@ -12,11 +12,17 @@ export class ApiService {
     constructor(private http :Http) {}
 
     login(user :any) :Observable<any> {
-		let url :string = this.baseUrl + '/api/v1/customer/';
-		let body :Object = {
-			email: user.username,
-			password: user.password
+		let url :string = this.baseUrl + '/api/v1/login/';
+		let body :any = {
+			email: user.email,
+			password: user.password,
+			status: ''
 		};
+		if (user.userType.text === 'Mechanic') {
+			body.status = '1';
+		} else {
+			body.status = '0';
+		}
 		return this.http.post(url, body)
 			.map( (response :Response) => {
 				let json :any = response.json();
@@ -43,18 +49,16 @@ export class ApiService {
 			});
 	};
 
-	signup(user :any) :Observable<any> {
+	createCustomer(user :any) :Observable<any> {
 		console.log(user);
-		let url :string = this.baseUrl + '/api/v1/signup/';
+		let url :string = this.baseUrl + '/api/v1/customer/';
 		let body :any = {
-			email: user.email,
-			status: ''
+			firstName: user.firstname,
+    		lastName: user.lastname,
+    		email: user.email,
+    		contactNo: user.contactNo,
+    		password: user.passwordGroup.password
 		};
-		if (user.userType.text === 'Mechanic') {
-			body.status = '1';
-		} else {
-			body.status = '0';
-		}
 		return this.http.post(url, body)
 			.map( (response :Response) => {
 				let json :any = response.json();

@@ -45,8 +45,6 @@ app.all('/*', function(request, response, next) {
     }
 });
 
-
-
 /**
  * Get port from environment and store in Express.
  */
