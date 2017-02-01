@@ -88,18 +88,17 @@ router.post('/mechanic', (req, res) => {
     mechanic_details.lastName = req.body.lastName;
     mechanic_details.email = req.body.email;
     mechanic_details.contactNo = req.body.contactNo;
-    // mechanic_details.veicleTypes.id = req.body.vehicleTypes.id;
-    // mechanic_details.vehicleTypes.models = req.body.vehicleTypes.models;
+    mechanic_details.veicleTypes = req.body;
     mechanic_details.status = req.body.status;
     mechanic_details.location = req.body.location;
     mechanic_details.address = req.body.address;
 
-    vehicleModel.create(mechanic_details, function(err, vehicel_model) {
+    mechanic.create(req.body, function(err, mechanic) {
         if (err) {
             res.send(err);
         } else {
 
-            res.send(vehicel_model);
+            res.send(mechanic);
 
         }
     });

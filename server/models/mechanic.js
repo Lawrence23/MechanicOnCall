@@ -9,13 +9,15 @@ var MechanicSchema = new Schema ({
 	contactNo:{type:'String', required:true},
 	status:{type:'String', default:'free'},
 	location:{type:'String'},
-	address:{type:'String'}
-	// vehicleTypes:[
-	// 	{
-	// 		id:String,
-	// 		models:String
-	// 	}
-	// ]
+	address:{type:'String'},
+	vehicleTypes:[
+		{
+			id:String,
+			model: [
+						{id:String}
+					]
+		}
+	]
 });
 
 var Mechanic = mongoose.model('Mechanics', MechanicSchema);
