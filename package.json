@@ -6,6 +6,7 @@
   "scripts": {
     "start": "ng serve",
     "server": "node server/server.js",
+    "watch":"nodemon --config nodemon.json --inspect server.js",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test",
     "pree2e": "webdriver-manager update",

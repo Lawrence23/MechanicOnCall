@@ -6,6 +6,18 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 
+
+//setting mongoDb
+var mongoose = require('mongoose'); 
+var db = mongoose.connect('mongodb://localhost:27017/Mechanic_on_Call');
+mongoose.connection.once('connected', function() {
+    console.log("Connected to database -**** Mechanic_on_Call **** ");
+});
+
+
+
+
+
 // Get our API routes
 const api = require('./server/routes/api');
 
@@ -26,7 +38,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // Set our api routes
-app.use('/api', api);
+app.use('/api/v1', api);
 
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {
@@ -36,7 +48,7 @@ app.get('*', (req, res) => {
 /**
  * Get port from environment and store in Express.
  */
-const port = process.env.PORT || '3000';
+const port = process.env.PORT || '7000';
 app.set('port', port);
 
 /**
