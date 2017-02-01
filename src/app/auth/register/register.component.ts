@@ -116,11 +116,30 @@ export class RegisterComponent implements OnInit {
 		if (this.registerForm.valid) {
 			this.apiService.checkUser(this.registerForm.value).subscribe(
 	            (data :any) => {
-	                console.log(data)
+	                if (data.data.length === 0) {
+	                	this.register();
+	                }
 	            },
-	            (error :Error) => console.log(error.message)
+	            (error :Error) => alert(error.message)
 	        );
 		}
+    }
+
+    register() :void {
+    	switch (this.userType.text) {
+    		case "Customer":
+    			// code...
+    			break;
+
+    		case "Mechanic":
+    			// code...
+    			break;
+
+
+    		default:
+    			// code...
+    			break;
+    	}
     }
 
 	dragEnd(event) {

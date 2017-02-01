@@ -12,7 +12,7 @@ const api = require('./server/routes/api');
 const app = express();
 
 // DB Connection
-const db = mongoose.connect('mongodb://localhost:27017/mechanic_db');
+const db = mongoose.connect('mongodb://lawry:lawry@ds141209.mlab.com:41209/mechanic-on-call');
 mongoose.connection.once('connected', function() {
     console.log("Connected to database -**** Mechanic_on_Call **** ");
 });
@@ -32,6 +32,20 @@ app.use('/api/v1', api);
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
+
+app.all('/*', function(request, response, next) {
+    response.header("Access-Control-Allow-Origin", "*");
+    //  response.header("Access-Control-Allow-Origin", "10.9.12.250");
+    response.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+    response.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
+    if (request.method == 'OPTIONS') {
+        response.status(200).end();
+    } else {
+        next();
+    }
+});
+
+
 
 /**
  * Get port from environment and store in Express.

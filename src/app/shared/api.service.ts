@@ -27,10 +27,34 @@ export class ApiService {
 	checkUser(user :any) :Observable<any> {
 		console.log(user);
 		let url :string = this.baseUrl + '/api/v1/signup/';
-		let body :Object = {
+		let body :any = {
 			email: user.email,
 			status: ''
 		};
+		if (user.userType.text === 'Mechanic') {
+			body.status = '1';
+		} else {
+			body.status = '0';
+		}
+		return this.http.post(url, body)
+			.map( (response :Response) => {
+				let json :any = response.json();
+				return json as any;
+			});
+	};
+
+	signup(user :any) :Observable<any> {
+		console.log(user);
+		let url :string = this.baseUrl + '/api/v1/signup/';
+		let body :any = {
+			email: user.email,
+			status: ''
+		};
+		if (user.userType.text === 'Mechanic') {
+			body.status = '1';
+		} else {
+			body.status = '0';
+		}
 		return this.http.post(url, body)
 			.map( (response :Response) => {
 				let json :any = response.json();
