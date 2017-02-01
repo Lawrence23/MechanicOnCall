@@ -9,18 +9,29 @@ var MechanicSchema = new Schema ({
 	password:{type:'String', required: true},
 	contactNo:{type:'String', required:true},
 	status:{type:'String', default:'free'},
-	location:{type:'String'},
-	address:{type:'String'},
+	// location:[
+	// 	{
+	// 	lat:Number ,
+	// 	lng:Number 		
+	// 	}
+
+	// 	],
+	// address:{type:'String'},
 	vehicleTypes:[
 		{
-			id:String,
+			id:{type:mongoose.Schema.Types.ObjectId, ref:'vehicleComp'},
 			model: [
-						{id:String}
-					]
+						{type:mongoose.Schema.Types.ObjectId,ref:'vehicleModel'}
+				   ]
 		}
 	],
-	city:{types:Schema.Types.ObjectId}
+	city:{type:mongoose.Schema.Types.ObjectId,ref:'cityList'}
 });
 
 var Mechanic = mongoose.model('Mechanics', MechanicSchema);
 module.exports = Mechanic;
+
+
+
+
+
