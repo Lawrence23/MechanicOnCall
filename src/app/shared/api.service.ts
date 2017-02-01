@@ -7,7 +7,8 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class ApiService {
 
-	public baseUrl: string = 'http://10.9.12.227:7000'
+	// public baseUrl: string = 'http://10.9.12.227:7000'; //dev
+	public baseUrl: string = 'https://mechanic-on-call.herokuapp.com'; //production
 
     constructor(private http :Http) {}
 
