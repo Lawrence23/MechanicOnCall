@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema; 
+var Schema = mongoose.Schema;
+
 var CustomerSchema = new Schema({
 
     firstName:{type:'String' ,required:true},  // Lawrence
@@ -9,6 +10,6 @@ var CustomerSchema = new Schema({
 
 });
 
-
 var CustomerDao = mongoose.model('customerList', CustomerSchema);
 module.exports = CustomerDao;
+
