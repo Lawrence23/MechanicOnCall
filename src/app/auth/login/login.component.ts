@@ -46,7 +46,6 @@ export class LoginComponent implements OnInit {
         if (this.loginForm.valid) {
             this.apiService.login(this.loginForm.value).subscribe(
                 (data :any) => {
-                    debugger;
                     if (data.status === '1') {
                         alert(data.message);
                         this.cookie.putObject('user', data.data[0]);
