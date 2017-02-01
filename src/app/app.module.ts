@@ -3,8 +3,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { MaterialModule } from '@angular/material';
-import 'hammerjs';
+import { AlertModule } from 'ng2-bootstrap';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AuthModule } from './auth/auth.module';
+import { SharedModule } from './shared/shared.module';
 
 import { AppComponent } from './app.component';
 
@@ -16,7 +19,10 @@ import { AppComponent } from './app.component';
 		BrowserModule,
 		FormsModule,
 		HttpModule,
-		MaterialModule.forRoot()
+		AlertModule.forRoot(),
+		AppRoutingModule,
+		AuthModule,
+		SharedModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]
