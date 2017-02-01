@@ -1,0 +1,9 @@
+.logo-image-container {
+    width: 50%;
+    margin: 0 auto;
+    padding: 30px 0;
+}
+
+img {
+    width: 100%;
+}

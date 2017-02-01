@@ -1,0 +1,10 @@
+<div class="form-group">
+    <label for="userType">Vehicle Company</label>
+    <ng-select [items]="items" (data)="refreshValue($event)" (selected)="selected($event)" placeholder="No user type selected">
+    </ng-select>
+</div>
+<div class="form-group">
+    <label for="userType">Vehicle Model</label>
+    <ng-select [items]="items" (data)="refreshValue($event)" (selected)="selected($event)" placeholder="No user type selected">
+    </ng-select>
+</div>

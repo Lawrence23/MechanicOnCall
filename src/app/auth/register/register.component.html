@@ -1,0 +1,57 @@
+<div class="container-fluid">
+    <h1>SIGN UP</h1>
+    <a routerLink="/auth/login" class="sign-in">Sign in</a>
+    <form class="signup-form" [formGroup]="registerForm">
+        <div class="form-group">
+            <label for="fullname">First Name</label>
+            <input type="text" class="form-control" id="firstname" placeholder="First Name" formControlName="firstname">
+            <p class="text-danger" *ngIf="registerForm.controls.firstname.errors?.required && submitted">First Name is required</p>
+        </div>
+        <div class="form-group">
+            <label for="fullname">Last Name</label>
+            <input type="text" class="form-control" id="lastname" placeholder="Last Name" formControlName="lastname">
+            <p class="text-danger" *ngIf="registerForm.controls.lastname.errors?.required && submitted">Last Name is required</p></div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Email" formControlName="email">
+            <p class="text-danger" *ngIf="registerForm.controls.email.errors?.required && submitted">First Name is required</p>
+            <p class="text-danger" *ngIf="registerForm.controls.email.errors?.email && submitted">Invalid Email</p>
+        </div>
+        <div class="form-group">
+            <label for="contactNumber">Contact Number</label>
+            <input type="number" class="form-control" id="contactNumber" placeholder="Contact Number" formControlName="contactNo">
+            <p class="text-danger" *ngIf="registerForm.controls.contactNo.errors?.required && submitted">Contact Number is required</p>
+        </div>
+        <div formGroupName="passwordGroup">
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password">
+                <p class="text-danger" *ngIf="registerForm.controls.passwordGroup.controls.password?.errors?.required && submitted">Password is required</p>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" formControlName="confirmPassword">
+                <p class="text-danger" *ngIf="registerForm.controls.passwordGroup.controls.confirmPassword?.errors?.required && submitted">Please re-enter password</p>
+                <p class="text-danger" *ngIf="registerForm.controls.passwordGroup?.errors?.equalTo && submitted">Passwords do not match</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="userType">User Type</label>
+            <ng-select [items]="items" (data)="refreshValue($event)" (selected)="selected($event)" placeholder="No user type selected">
+            </ng-select>
+            <p class="text-danger" *ngIf="registerForm.controls.userType.errors?.required && submitted">User Type is required</p>
+        </div>
+        <div *ngIf="userType.text === 'Mechanic'">
+            <app-vehicle *ngFor="let item of count" ></app-vehicle>
+        </div>
+        <button class="btn btn-default" (click)="incrementCounter()" *ngIf="userType.text === 'Mechanic'">Add Vehicle</button>
+        <div class="form-group" *ngIf="userType.text === 'Mechanic'">
+            <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+        </div>
+        <sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" *ngIf="userType.text === 'Mechanic'">
+            <sebm-google-map-marker [latitude]="lat" [longitude]="lng" [markerDraggable]="true" (dragEnd)="dragEnd($event)"></sebm-google-map-marker>
+        </sebm-google-map>
+        <button class="btn btn-default" (click)="setLocation()" *ngIf="userType.text === 'Mechanic'">Set Location</button>
+        <button type="submit" class="btn btn-default" (click)="submit()">Submit</button>
+    </form>
+</div>

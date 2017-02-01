@@ -3,27 +3,24 @@ const express = require('express');
 const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
-
-
-//setting mongoDb
-var mongoose = require('mongoose'); 
-var db = mongoose.connect('mongodb://localhost:27017/Mechanic_on_Call');
-mongoose.connection.once('connected', function() {
-    console.log("Connected to database -**** Mechanic_on_Call **** ");
-});
-
-
-
-
+const cookieParser = require('cookie-parser');
+const mongoose = require('mongoose');
 
 // Get our API routes
 const api = require('./server/routes/api');
 
 const app = express();
 
+// DB Connection
+const db = mongoose.connect('mongodb://localhost:27017/mechanic_db');
+mongoose.connection.once('connected', function() {
+    console.log("Connected to database -**** Mechanic_on_Call **** ");
+});
+
 // Parsers for POST data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 // Point static path to dist
 app.use(express.static(path.join(__dirname, 'dist')));

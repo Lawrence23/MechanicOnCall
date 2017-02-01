@@ -1,0 +1,22 @@
+h1 {
+    text-align: center;
+    color: #737280;
+    border-bottom: 1px solid #cdcdcd;
+    margin: 0 auto;
+    box-sizing: border-box;
+    width: 90%;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.sign-in {
+    float: right;
+}
+
+.signup-form {
+    margin-top: 55px;
+}
+
+.sebm-google-map-container {
+    height: 300px;
+}
