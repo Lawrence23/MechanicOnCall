@@ -12,7 +12,7 @@ const api = require('./server/routes/api');
 const app = express();
 
 // DB Connection
-const db = mongoose.connect('mongodb://localhost:27017/mechanic_db');
+const db = mongoose.connect('mongodb://localhost:27017/Mechanic_on_Call');
 mongoose.connection.once('connected', function() {
     console.log("Connected to database -**** Mechanic_on_Call **** ");
 });
