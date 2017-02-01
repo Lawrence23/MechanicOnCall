@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedComponent } from './shared.component';
+
+import { ApiService } from './api.service';
+import { AuthService } from './auth.service';
+import { AuthGuard } from './auth-guard.service';
 
 @NgModule({
-  imports: [
-    CommonModule
-  ],
-  declarations: [SharedComponent]
+    imports: [
+        CommonModule
+    ],
+    providers: [ApiService, AuthService, AuthGuard]
 })
-export class SharedModule { }
+export class SharedModule {}

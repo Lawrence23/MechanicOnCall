@@ -1,16 +1,16 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import { SharedService } from './shared.service';
+import { ApiService } from './api.service';
 
-describe('Service: Shared', () => {
+describe('ApiService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [SharedService]
+      providers: [ApiService]
     });
   });
 
-  it('should ...', inject([SharedService], (service: SharedService) => {
+  it('should ...', inject([ApiService], (service: ApiService) => {
     expect(service).toBeTruthy();
   }));
 });
