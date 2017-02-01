@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ApiService } from '../../shared/api.service';
 
 import { GoogleMapsAPIWrapper, MapsAPILoader } from 'angular2-google-maps/core';
+import { CustomValidators } from 'ng2-validation';
 
 @Component({
   selector: 'app-register',
@@ -25,6 +26,9 @@ export class RegisterComponent implements OnInit {
     lng: number = 7.809007;
     zoom: number = 15;
     searchControl: FormControl;
+    vechicles: number = 1;
+    count: number[];
+    submitted: boolean
 
     @ViewChild("search") searchElementRef: ElementRef;
 
@@ -36,54 +40,70 @@ export class RegisterComponent implements OnInit {
         private apiService: ApiService
     ) {
         this.registerForm = new FormGroup({
-            username: new FormControl(),
-            email: new FormControl(),
-            password: new FormControl(),
-            confirmPassword: new FormControl(),
-            userType: new FormControl(),
-            contactNo: new FormControl()
+            firstname: new FormControl('', Validators.required),
+            lastname: new FormControl('', Validators.required),
+            email: new FormControl('', [Validators.required, CustomValidators.email]),
+            passwordGroup: new FormGroup({
+				password: new FormControl('', Validators.required),
+				confirmPassword: new FormControl('', Validators.required)
+			}, CustomValidators.equalTo),
+            userType: new FormControl('', Validators.required),
+            contactNo: new FormControl('', Validators.required)
         });
     	this.searchControl = new FormControl();
+    	this.count = Array.from(Array(this.vechicles),(x,i)=>i);
+    	this.submitted = false;
     }
 
     ngOnInit() {
-        console.log(this.googleMaps);
-        navigator.geolocation.getCurrentPosition((position) => {
-            this.lat = position.coords.latitude;
-            this.lng = position.coords.longitude;
-        }, function() {});
 
-        this.mapsAPILoader.load().then(() => {
-        	let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-                types: ["address"]
-            });
-            autocomplete.addListener("place_changed", () => {
-            	this.ngZone.run(() => {
-	                //get the place result
-	                let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-
-	                //verify result
-	                if (place.geometry === undefined || place.geometry === null) {
-	                    return;
-	                }
-
-	                //set latitude, longitude and zoom
-	                this.lat = place.geometry.location.lat();
-	                this.lng = place.geometry.location.lng();
-	                let latLng = {
-	                	lat: this.lat,
-	                	lng: this.lng
-	                }
-	                this.googleMaps.setCenter(latLng);
-	                // this.sharedDataService.setLatLng(latLng);
-            	});
-            });
-        });
     }
 
     selected(value: any): void {
         console.log(value);
         this.userType = value;
+        this.registerForm.patchValue({
+        	userType: value
+        })
+        if (this.userType.text === 'Mechanic') {
+        	console.log(this.googleMaps);
+        	navigator.geolocation.getCurrentPosition((position) => {
+	            this.lat = position.coords.latitude;
+	            this.lng = position.coords.longitude;
+	        }, function() {});
+
+	        this.mapsAPILoader.load().then(() => {
+	        	let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+	                types: ["address"]
+	            });
+	            autocomplete.addListener("place_changed", () => {
+	            	this.ngZone.run(() => {
+		                //get the place result
+		                let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+
+		                //verify result
+		                if (place.geometry === undefined || place.geometry === null) {
+		                    return;
+		                }
+
+		                //set latitude, longitude and zoom
+		                this.lat = place.geometry.location.lat();
+		                this.lng = place.geometry.location.lng();
+		                let latLng = {
+		                	lat: this.lat,
+		                	lng: this.lng
+		                }
+		                this.googleMaps.setCenter(latLng);
+		                // this.sharedDataService.setLatLng(latLng);
+	            	});
+	            });
+	        });
+        }
+    }
+
+    incrementCounter() :void {
+    	this.vechicles++;
+    	this.count = Array.from(Array(this.vechicles),(x,i)=>i);
     }
 
     refreshValue(value: any): void {
@@ -92,7 +112,15 @@ export class RegisterComponent implements OnInit {
     }
 
     submit(): void {
-        console.log(this.registerForm.value);
+		this.submitted = true;
+		if (this.registerForm.valid) {
+			this.apiService.checkUser(this.registerForm.value).subscribe(
+	            (data :any) => {
+	                console.log(data)
+	            },
+	            (error :Error) => console.log(error.message)
+	        );
+		}
     }
 
 	dragEnd(event) {
