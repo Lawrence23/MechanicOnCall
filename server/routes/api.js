@@ -5,6 +5,8 @@ const vehicleComp = require('../models/vehicleCompany');
 const vehicleModel = require('../models/vehicleModel');
 const mechanic = require('../models/mechanic');
 const city = require('../models/city');
+const history = require('../models/history');
+
 var mongoose = require('mongoose');
 
 
@@ -207,6 +209,42 @@ router.get('/city', (req, res) => {
         }
     });
 });
+
+
+
+router.post('/history', (req, res) => {
+
+
+    history.create(req.body, function(err, history) {
+        if (err) {
+            res.send(err);
+        } else {
+
+            res.send(history);
+
+        }
+    });
+});
+
+
+router.get('/history', (req, res) => {
+    history.find(function(err, history) {
+        if (err) {
+            res.json({
+                "err": err
+            });
+        } else {
+            res.json({
+
+                status: 1,
+                message: "Success",
+                data: history
+
+            });
+        }
+    });
+});
+
 
 
 

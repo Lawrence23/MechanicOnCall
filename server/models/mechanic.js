@@ -25,13 +25,17 @@ var MechanicSchema = new Schema ({
 				   ]
 		}
 	],
-	city:{type:mongoose.Schema.Types.ObjectId,ref:'cityList'}
+	city:{type:mongoose.Schema.Types.ObjectId,ref:'cityList'},
+	Rating: [{
+	Created_by:{type:mongoose.Schema.Types.ObjectId, ref:'customerList'},
+	Rating: Number
+}],
+avgRating: Number
 
 });
 
 var Mechanic = mongoose.model('Mechanics', MechanicSchema);
 module.exports = Mechanic;
-
 
 
 
