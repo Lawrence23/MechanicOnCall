@@ -7,7 +7,8 @@ var CustomerSchema = new Schema({
     lastName:{type:'String' ,required:true}, // Moraira
     email:{type:'String' ,required:true,unique: true }, // lawret@qburst.com
     password:{type:'String', required: true},
-    contactNo:{type:'number',required:true} // ph: 9633339137
+    contactNo:{type:'number',required:true}, // ph: 9633339137
+    city:{type:'String', required:true}
 
 
 });

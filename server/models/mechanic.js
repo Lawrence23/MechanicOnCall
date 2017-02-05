@@ -26,6 +26,7 @@ var MechanicSchema = new Schema ({
 		}
 	],
 	city:{type:mongoose.Schema.Types.ObjectId,ref:'cityList'}
+
 });
 
 var Mechanic = mongoose.model('Mechanics', MechanicSchema);
