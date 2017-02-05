@@ -6,6 +6,7 @@ import { ApiService } from '../../shared/api.service';
 
 import { GoogleMapsAPIWrapper, MapsAPILoader } from 'angular2-google-maps/core';
 import { CustomValidators } from 'ng2-validation';
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 @Component({
   selector: 'app-register',
@@ -33,6 +34,7 @@ export class RegisterComponent implements OnInit {
     @ViewChild("search") searchElementRef: ElementRef;
 
     constructor(
+		private cookie :CookieService,
         private googleMaps: GoogleMapsAPIWrapper,
     	private mapsAPILoader: MapsAPILoader,
     	private ngZone: NgZone,
@@ -116,11 +118,39 @@ export class RegisterComponent implements OnInit {
 		if (this.registerForm.valid) {
 			this.apiService.checkUser(this.registerForm.value).subscribe(
 	            (data :any) => {
-	                console.log(data)
+	                if (data.data.length === 0) {
+	                	this.register();
+	                }
 	            },
-	            (error :Error) => console.log(error.message)
+	            (error :Error) => alert(error.message)
 	        );
 		}
+    }
+
+    register() :void {
+    	switch (this.userType.text) {
+    		case "Customer":
+    			this.apiService.createCustomer(this.registerForm.value).subscribe(
+		            (data :any) => {
+		            	if (data.status === '1') {
+		                	alert(data.message);
+		                	this.cookie.putObject('user', data.data);
+		                	this.router.navigate(['/customer']);
+		                }
+		            },
+		            (error :Error) => alert(error.message)
+	            );
+    			break;
+
+    		case "Mechanic":
+    			// code...
+    			break;
+
+
+    		default:
+    			// code...
+    			break;
+    	}
     }
 
 	dragEnd(event) {

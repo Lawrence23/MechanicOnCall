@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { CustomerComponent } from './customer.component';
 
 @NgModule({
-  imports: [
-    CommonModule
-  ],
-  declarations: [CustomerComponent]
+    imports: [
+        CommonModule
+    ],
+    declarations: [CustomerComponent]
 })
-export class CustomerModule { }
+export class CustomerModule {}
